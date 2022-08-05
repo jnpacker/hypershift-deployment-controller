@@ -8,9 +8,9 @@ When you create a HypershiftDeployment CR, the HypershiftDeployment operator cre
 - HostedCluster CR
 - NodePool CRs
 - Pull secret
-- Control plane operator credential secret
-- Cloud control credential secret
-- Node management credential secret
+- ~Control plane operator credential secret~
+- ~Cloud control credential secret~
+- ~Node management credential secret~
 - SSH key secret
 - etcd encryption secret
 
@@ -104,13 +104,10 @@ spec:
                 id: subnet-123456789
               vpc: vpc-123456789
               zone: us-east-1a
-            controlPlaneOperatorCreds:
-              name: my-hosted-cluster-cpo-creds
+            controlPlaneOperatorCreds: {}
             endpointAccess: Public
-            kubeCloudControllerCreds:
-              name: my-hosted-cluster-cloud-ctrl-creds
-            nodePoolManagementCreds:
-              name: my-hosted-cluster-node-mgmt-creds
+            kubeCloudControllerCreds: {}
+            nodePoolManagementCreds: {}
             region: us-east-1
             resourceTags:
             - key: kubernetes.io/cluster/my-hosted-cluster-12345
@@ -188,33 +185,6 @@ spec:
         labels:
           hypershift.openshift.io/auto-created-for-infra: my-hosted-cluster-12345
         name: my-hosted-cluster-pull-secret
-        namespace: clusters
-    - apiVersion: v1
-      data:
-        credentials: base64-encoded-cpo-creds
-      kind: Secret
-      metadata:
-        labels:
-          hypershift.openshift.io/auto-created-for-infra: my-hosted-cluster-12345
-        name: my-hosted-cluster-cpo-creds
-        namespace: clusters
-    - apiVersion: v1
-      data:
-        credentials: base64-encoded-cloud-ctrl-creds
-      kind: Secret
-      metadata:
-        labels:
-          hypershift.openshift.io/auto-created-for-infra: my-hosted-cluster-12345
-        name: my-hosted-cluster-cloud-ctrl-creds
-        namespace: clusters
-    - apiVersion: v1
-      data:
-        credentials: base64-encoded-node-mgmt-creds
-      kind: Secret
-      metadata:
-        labels:
-          hypershift.openshift.io/auto-created-for-infra: my-hosted-cluster-12345
-        name: my-hosted-cluster-node-mgmt-creds
         namespace: clusters
     - apiVersion: v1
       data:
